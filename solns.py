@@ -38,9 +38,15 @@ def process_input_day_n(n, input_path = 'input_data/'):
                 x.append(line.strip('\n'))
         return x
     
+   
+    elif n in [4]:
+        with open(filepath) as fp:
+            for line in fp:
+                x.append([list(map(int, x.split('-'))) for x in line.strip('\n').split(',')])
+        return x
+    
     else:
         return 'Not implemented yet'
-
 
 def soln_day_1(x):
    
@@ -107,4 +113,25 @@ def soln_day_3(x):
 
 
 
+def soln_day_4(x):
+
+    ## Part 1
+    num_redundant = 0
+    for elf_1, elf_2 in x:
+        max_individ_range = max(elf_1[1] - elf_1[0], elf_2[1] - elf_2[0])
+        overall_range = max(elf_1[1], elf_2[1]) - min(elf_1[0], elf_2[0])
+        if max_individ_range == overall_range:
+            num_redundant += 1
+    soln_pt_1 = num_redundant
+
+    ## Part 2
+    num_redundant = 0
+    for elf_1, elf_2 in x:
+        tot_individ_range = (1 + elf_1[1] - elf_1[0]) + (1 + elf_2[1] - elf_2[0])
+        overall_range = 1 + max(elf_1[1], elf_2[1]) - min(elf_1[0], elf_2[0])
+        if overall_range < tot_individ_range:
+            num_redundant += 1
+    soln_pt_2 = num_redundant
+    
+    return (soln_pt_1, soln_pt_2)
 
