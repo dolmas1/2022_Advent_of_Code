@@ -1,6 +1,8 @@
 import numpy as np
 import os
+from copy import deepcopy
 from string import ascii_lowercase, ascii_uppercase
+import re
 
 
 def solve_day_n(n, input_path = 'input_data/'):
@@ -44,6 +46,14 @@ def process_input_day_n(n, input_path = 'input_data/'):
             for line in fp:
                 x.append([list(map(int, x.split('-'))) for x in line.strip('\n').split(',')])
         return x
+    
+    elif n in [5]:
+        with open(filepath) as fp:
+            for line in fp:
+                x.append(line)
+        return(x)
+        
+
     
     else:
         return 'Not implemented yet'
@@ -135,3 +145,53 @@ def soln_day_4(x):
     
     return (soln_pt_1, soln_pt_2)
 
+
+
+def soln_day_5(x):
+    start_config = []
+    instructions = []
+    i = 0
+    while len(x[i]) == 36:
+        start_config.append([*x[i][1::4]])
+        i += 1
+    start_config = list(map(list, zip(*start_config))) # transpose
+    start_config = [[a for a in start_stack if a != ' ' and not a.isdigit()] for start_stack in start_config] # non-empty items only
+    instructions = [re.findall(r'\d+', line) for line in x[i+1:]] # instructions[0] times, move from instructions[1] to instructions[2]
+
+    ## Part 1
+    pt1_config = deepcopy(start_config)
+    for instruction in instructions:
+        for _ in range(int(instruction[0])):
+            move_from = int(instruction[1]) - 1
+            move_to = int(instruction[2]) - 1
+            char_to_move = pt1_config[move_from].pop(0)
+            pt1_config[move_to].insert(0, char_to_move)
+    soln_pt_1 = ''.join([stack[0] for stack in pt1_config])
+
+    ## Part 2
+    pt2_config = deepcopy(start_config)
+    for instruction in instructions:
+        num_to_move = int(instruction[0])
+        move_from = int(instruction[1]) - 1
+        move_to = int(instruction[2]) - 1
+        char_to_move = pt2_config[move_from][:num_to_move]
+        del pt2_config[move_from][:num_to_move]
+        pt2_config[move_to] = char_to_move + pt2_config[move_to]
+    soln_pt_2 = ''.join([stack[0] for stack in pt2_config])
+    
+    return (soln_pt_1, soln_pt_2)
+
+
+
+
+def soln_day_6(x):
+
+    ## Part 1
+
+    soln_pt_1 = 0
+
+    ## Part 2
+
+    soln_pt_2 = 0
+    
+    return (soln_pt_1, soln_pt_2)
