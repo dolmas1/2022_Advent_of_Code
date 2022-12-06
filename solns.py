@@ -47,14 +47,12 @@ def process_input_day_n(n, input_path = 'input_data/'):
                 x.append([list(map(int, x.split('-'))) for x in line.strip('\n').split(',')])
         return x
     
-    elif n in [5]:
+    elif n in [5, 6]:
         with open(filepath) as fp:
             for line in fp:
                 x.append(line)
         return(x)
         
-
-    
     else:
         return 'Not implemented yet'
 
@@ -185,6 +183,22 @@ def soln_day_5(x):
 
 
 def soln_day_6(x):
+
+    ## Part 1
+    i = 4
+    while len(set(x[0][i-4:i])) < 4:
+        i += 1
+    soln_pt_1 = i
+
+    ## Part 2
+    i = 14
+    while len(set(x[0][i-14:i])) < 14:
+        i += 1
+    soln_pt_2 = i
+    
+    return (soln_pt_1, soln_pt_2)
+
+def soln_day_7(x):
 
     ## Part 1
 
