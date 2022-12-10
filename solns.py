@@ -34,7 +34,7 @@ def process_input_day_n(n, input_path = 'input_data/'):
                 x.append(line.strip('\n').split(' ') )
         return x
     
-    elif n in [3]:
+    elif n in [3, 7, 10]:
         with open(filepath) as fp:
             for line in fp:
                 x.append(line.strip('\n'))
@@ -198,10 +198,72 @@ def soln_day_6(x):
     
     return (soln_pt_1, soln_pt_2)
 
+
 def soln_day_7(x):
 
     ## Part 1
 
+    soln_pt_1 = 0
+
+    ## Part 2
+
+    soln_pt_2 = 0
+    
+    return (soln_pt_1, soln_pt_2)
+
+
+def soln_day_8(x):
+
+    ## Part 1
+
+    soln_pt_1 = 0
+
+    ## Part 2
+
+    soln_pt_2 = 0
+    
+    return (soln_pt_1, soln_pt_2)
+
+def soln_day_9(x):
+
+    ## Part 1
+
+    soln_pt_1 = 0
+
+    ## Part 2
+
+    soln_pt_2 = 0
+    
+    return (soln_pt_1, soln_pt_2)
+
+def soln_day_10(x):
+
+    ## Part 1
+    register = [1]
+    for line in x:
+        if line == 'noop':
+            register += [register[-1]]
+        else:
+            register += [register[-1], register[-1] + int(re.findall(r'-?\d+', line)[0])]
+
+    target_indices = np.arange(20,221, 40)
+    soln_pt_1 = sum(np.array(register)[target_indices - 1] * target_indices)
+
+    ## Part 2
+    pixels = []
+    for i in range(len(register)):
+        if register[i] - 1 <= i%40 <= register[i] + 1:
+            pixels.append('#')
+        else:
+            pixels.append('.')
+    soln_pt_2 = [''.join(pixels[i:i+40]) for i in range(0, len(pixels)-1, 40)]
+    
+    return (soln_pt_1, soln_pt_2)
+
+def soln_day_11(x):
+
+    ## Part 1
+    
     soln_pt_1 = 0
 
     ## Part 2
