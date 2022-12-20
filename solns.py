@@ -2,6 +2,7 @@ import numpy as np
 import os
 from copy import deepcopy
 from string import ascii_lowercase, ascii_uppercase
+from collections import defaultdict
 import re
 
 
@@ -34,7 +35,7 @@ def process_input_day_n(n, input_path = 'input_data/'):
                 x.append(line.strip('\n').split(' ') )
         return x
     
-    elif n in [3, 7, 10]:
+    elif n in [3, 7, 10, 11]:
         with open(filepath) as fp:
             for line in fp:
                 x.append(line.strip('\n'))
@@ -202,12 +203,34 @@ def soln_day_6(x):
 def soln_day_7(x):
 
     ## Part 1
+    current_dir = []
+    sizes_dict = defaultdict(int)
 
-    soln_pt_1 = 0
+    for instruction in x:
+        # Change dir, if needed:
+        if re.match(r'^\$ cd.*', instruction):
+            cd_loc = re.search(r'^\$ cd\s(.*)', instruction).groups()[0]
+            if cd_loc != '..':
+                current_dir.append(cd_loc)
+            else:
+                current_dir.pop()
+                
+        # don't need to do anything if ls or showing a dir
+        elif instruction[0] == '$' or re.match(r'^dir\s.*', instruction):
+            pass
+        
+        # else, add the file size to current dir and every parent dir
+        else:
+            file_size = int(re.search(r'^(\d+)\s', instruction).groups()[0])
+            for i in range(len(current_dir)):
+                sizes_dict['/'.join(current_dir[:i+1])] += file_size
+
+    soln_pt_1 = sum([val for val in sizes_dict.values() if val <= 100000])
 
     ## Part 2
+    space_to_clear = 30000000 - (70000000 - max(sizes_dict.values()))
 
-    soln_pt_2 = 0
+    soln_pt_2 = min([val for val in sizes_dict.values() if val >= space_to_clear])
     
     return (soln_pt_1, soln_pt_2)
 
@@ -261,6 +284,174 @@ def soln_day_10(x):
     return (soln_pt_1, soln_pt_2)
 
 def soln_day_11(x):
+
+    ## Part 1
+    
+    soln_pt_1 = 0
+
+    ## Part 2
+
+    soln_pt_2 = 0
+    
+    return (soln_pt_1, soln_pt_2)
+
+def soln_day_12(x):
+
+    ## Part 1
+    
+    soln_pt_1 = 0
+
+    ## Part 2
+
+    soln_pt_2 = 0
+    
+    return (soln_pt_1, soln_pt_2)
+
+def soln_day_13(x):
+
+    ## Part 1
+    
+    soln_pt_1 = 0
+
+    ## Part 2
+
+    soln_pt_2 = 0
+    
+    return (soln_pt_1, soln_pt_2)
+
+def soln_day_14(x):
+
+    ## Part 1
+    
+    soln_pt_1 = 0
+
+    ## Part 2
+
+    soln_pt_2 = 0
+    
+    return (soln_pt_1, soln_pt_2)
+
+def soln_day_15(x):
+
+    ## Part 1
+    
+    soln_pt_1 = 0
+
+    ## Part 2
+
+    soln_pt_2 = 0
+    
+    return (soln_pt_1, soln_pt_2)
+
+def soln_day_16(x):
+
+    ## Part 1
+    
+    soln_pt_1 = 0
+
+    ## Part 2
+
+    soln_pt_2 = 0
+    
+    return (soln_pt_1, soln_pt_2)
+
+def soln_day_17(x):
+
+    ## Part 1
+    
+    soln_pt_1 = 0
+
+    ## Part 2
+
+    soln_pt_2 = 0
+    
+    return (soln_pt_1, soln_pt_2)
+
+def soln_day_18(x):
+
+    ## Part 1
+    
+    soln_pt_1 = 0
+
+    ## Part 2
+
+    soln_pt_2 = 0
+    
+    return (soln_pt_1, soln_pt_2)
+
+def soln_day_19(x):
+
+    ## Part 1
+    
+    soln_pt_1 = 0
+
+    ## Part 2
+
+    soln_pt_2 = 0
+    
+    return (soln_pt_1, soln_pt_2)
+
+def soln_day_20(x):
+
+    ## Part 1
+    
+    soln_pt_1 = 0
+
+    ## Part 2
+
+    soln_pt_2 = 0
+    
+    return (soln_pt_1, soln_pt_2)
+
+def soln_day_21(x):
+
+    ## Part 1
+    
+    soln_pt_1 = 0
+
+    ## Part 2
+
+    soln_pt_2 = 0
+    
+    return (soln_pt_1, soln_pt_2)
+
+def soln_day_22(x):
+
+    ## Part 1
+    
+    soln_pt_1 = 0
+
+    ## Part 2
+
+    soln_pt_2 = 0
+    
+    return (soln_pt_1, soln_pt_2)
+
+def soln_day_11(x):
+
+    ## Part 1
+    
+    soln_pt_1 = 0
+
+    ## Part 2
+
+    soln_pt_2 = 0
+    
+    return (soln_pt_1, soln_pt_2)
+
+def soln_day_23(x):
+
+    ## Part 1
+    
+    soln_pt_1 = 0
+
+    ## Part 2
+
+    soln_pt_2 = 0
+    
+    return (soln_pt_1, soln_pt_2)
+
+def soln_day_24(x):
 
     ## Part 1
     
