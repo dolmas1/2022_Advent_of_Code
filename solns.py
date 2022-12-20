@@ -52,10 +52,16 @@ def process_input_day_n(n, input_path = 'input_data/'):
         with open(filepath) as fp:
             for line in fp:
                 x.append(line)
-        return(x)
+        return x
+    
+    elif n in [8]:
+        with open(filepath) as fp:
+            x = np.array([[char for char in line.strip('\n')] for line in fp]).astype(int)
+        return x
         
     else:
         return 'Not implemented yet'
+    
 
 def soln_day_1(x):
    
@@ -238,12 +244,26 @@ def soln_day_7(x):
 def soln_day_8(x):
 
     ## Part 1
+    tree_is_visible = lambda x, i: int(x[i] > max(x[:i]) or x[i] > max(x[i+1:]))
+    array_is_visible = lambda x: [1] + [tree_is_visible(x, i) for i in range(1, len(x) - 1)] + [1]
 
-    soln_pt_1 = 0
+    visible_horizontal = np.apply_along_axis(array_is_visible, axis=1, arr=x)
+    visible_vertical = np.apply_along_axis(array_is_visible, axis=0, arr=x)
+
+    visible_trees = np.maximum(visible_horizontal, visible_vertical)
+    
+    soln_pt_1 = np.sum(visible_trees)
 
     ## Part 2
+    visibility_l = lambda x, i: i - np.max(np.nonzero(x[:i] >= x[i])[0], initial = 0)
+    visibility_r = lambda x, i: visibility_l(x[::-1], len(x) - i - 1)
+    visibility = lambda x: [visibility_l(x, i) * visibility_r(x, i) for i in range(len(x))]
 
-    soln_pt_2 = 0
+    visibility_horizontal = np.apply_along_axis(visibility, axis=1, arr=x)
+    visibility_vertical = np.apply_along_axis(visibility, axis=0, arr=x)
+    tree_visibility = np.multiply(visibility_horizontal, visibility_vertical)
+    
+    soln_pt_2 = np.max(tree_visibility)
     
     return (soln_pt_1, soln_pt_2)
 
